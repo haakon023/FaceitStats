@@ -51,7 +51,6 @@ async function eloCommand(player)
 }
 
 
-
 async function statsCommand(player, limit)
 {
     const playerStats = await fetchPlayerStats(player, limit);
@@ -73,12 +72,12 @@ function buildStatsEmbeddedMessage(stats, playername)
         .setColor("#FFFFFF")
         .addFields(
             { name: 'Matches Played', value: stats.matches.toString() },
-            { name: 'Wins', value: stats.wins.toString(), inline: true },
+            { name: 'Wins', value: stats.wins.toFixed(2), inline: true },
             { name: 'Losses', value: stats.loss.toString(), inline: true },
-            { name: 'Win/Loss ratio', value: stats.wr.toString(), inline: true },
+            { name: 'Win/Loss %', value: stats.wr.toFixed(2), inline: true },
             { name: 'Kills', value: stats.kills.toString() , inline: true},
             { name: 'Deaths', value: stats.deaths.toString(), inline: true },
-            { name: 'hs %', value: `${stats.hsPercent}%`, inline: true },
+            { name: 'Headshot %', value: `${stats.hsPercent}%`, inline: true },
             { name: 'Kill/Death Ratio (KD)', value: stats.kd.toFixed(2), inline: true },
             { name: 'Kill/Round Ratio (KR)', value: stats.kr.toFixed(2), inline: true }
         )
@@ -121,7 +120,7 @@ function calculateStats(matchStats)
 
     const kd = deaths !== 0 ? kills / deaths : 0;
     const kr = rounds !== 0 ? kills / rounds : 0;
-    const wr = matches !== 0 ? wins / matches : 0;
+    const wr = matches !== 0 ? (wins / matches) * 100 : 0;
 
     const stats = {
         matches,
@@ -141,6 +140,8 @@ async function fetchPlayerStats(player, limit)
 {
 
     const response = await fetchPlayer(player);
+    if (!response)
+        return
     const playerId = response.player_id;
 
     const url = `https://open.faceit.com/data/v4/players/${playerId}/games/cs2/stats?limit=${limit}`
