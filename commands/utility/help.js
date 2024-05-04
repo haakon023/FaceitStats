@@ -12,6 +12,9 @@ module.exports = {
         .addFields("/stats playername", "Get the stats of a player. Playername is case sensetive. Optional extra parameter to add based on how many matches")
         .addFields("/elo playername", "Get the current elo of a player. Playername is case sensetive.")
         .addFields("/compare playername playername", "Compare two players, the player names are case sensetive.")
+        
+        interaction.reply({embeds: [message]})
     }
 }
+
 
