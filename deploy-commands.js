@@ -36,7 +36,7 @@ const rest = new REST().setToken(token);
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-		// The put method is used to fully refresh all commands in the guild with the current set
+		
 		await rest.put(
             Routes.applicationCommands(clientId),
             { body: commands },
