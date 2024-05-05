@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {statsCommand} = require('../../fetch');
+const {statsCommand, buildStatsEmbeddedMessage} = require('../../fetch');
 
 module.exports = {
     category: 'utility',
@@ -19,6 +19,9 @@ module.exports = {
         const name = interaction.options.get('input')
         const limit = interaction.options.get('limit') || 0;
         const stats = await statsCommand(name.value, limit.value);
-        await interaction.reply({embeds: [stats]});
+    
+        const statsMsg = buildStatsEmbeddedMessage(stats, player);
+
+        await interaction.reply({embeds: [statsMsg]});
     }
 }
