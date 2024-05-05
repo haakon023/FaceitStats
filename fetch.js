@@ -2,7 +2,8 @@ const axios = require('axios');
 const {EmbedBuilder} = require('discord.js')
 module.exports = {
     eloCommand,
-    statsCommand
+    statsCommand,
+    buildStatsEmbeddedMessage
 }
 async function fetchPlayer(player)
 {
@@ -58,9 +59,7 @@ async function statsCommand(player, limit)
     if(!playerStats)
         return ("dunno");
 
-    const stats = calculateStats(playerStats);
-
-    return buildStatsEmbeddedMessage(stats, player)
+    return calculateStats(playerStats, player);
 
 }
 
@@ -90,7 +89,7 @@ function buildStatsEmbeddedMessage(stats, playername)
     
 }
 
-function calculateStats(matchStats)
+function calculateStats(matchStats, playerName)
 {
     let kills = 0;
     let deaths = 0;
@@ -131,7 +130,9 @@ function calculateStats(matchStats)
         hsPercent,
         kd,
         kr,
-        wr
+        wr,
+        name: playerName
+        
     }
     return stats;
 }
