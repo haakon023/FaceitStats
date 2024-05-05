@@ -63,11 +63,11 @@ async function statsCommand(player, limit)
 
 }
 
-function buildStatsEmbeddedMessage(stats, playername)
+function buildStatsEmbeddedMessage(stats)
 {
     try {
         const msg = new EmbedBuilder()
-        .setTitle(playername + "'s stats")
+        .setTitle(stats.name + "'s stats")
         .setColor("#FFFFFF")
         .addFields(
             { name: 'Matches Played', value: stats.matches.toString() },

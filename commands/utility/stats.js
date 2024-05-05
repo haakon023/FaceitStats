@@ -20,7 +20,7 @@ module.exports = {
         const limit = interaction.options.get('limit') || 0;
         const stats = await statsCommand(name.value, limit.value);
     
-        const statsMsg = buildStatsEmbeddedMessage(stats, player);
+        const statsMsg = buildStatsEmbeddedMessage(stats);
 
         await interaction.reply({embeds: [statsMsg]});
     }
